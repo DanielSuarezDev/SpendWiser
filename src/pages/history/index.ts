@@ -1,0 +1,1 @@
+export {HistoryLoad as default} from './History.load';

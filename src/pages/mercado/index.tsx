@@ -1,0 +1,1 @@
+export {MercadoLoad as default} from './Mercado.load'
