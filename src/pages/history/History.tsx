@@ -17,7 +17,7 @@ const History: React.FC = () => {
 console.log('compras', compras)
   useEffect(() => {
     const fetchCompras = async () => {
-      const q = query(collection(db, 'historial'), where('userId', '==', user?.uid || ''));
+      const q = query(collection(db, 'history'), where('userId', '==', user?.uid || ''));
       const querySnapshot = await getDocs(q);
 
       const fetchedCompras: ICompra[] = [];

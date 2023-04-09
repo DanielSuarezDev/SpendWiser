@@ -16,13 +16,13 @@ interface HistoryDetailsProps {
 
 const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
   const [historial, setHistorial] = useState<ICompra | null>(null);
-  console.log('historial', historial)
+  console.log('history', historial)
   const router = useRouter();
 
   useEffect(() => {
     const fetchHistorial = async () => {
       try {
-        const docRef = doc(db, 'historial', id);
+        const docRef = doc(db, 'history', id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {

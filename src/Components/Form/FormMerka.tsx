@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
+
 import { db } from "../../Config/firebase";
 import { useAuth } from "../../Contexts/AuthContext";
 
@@ -32,7 +33,7 @@ const FormProducts: React.FC<any> = () => {
     e.stopPropagation(); // Agrega esto
 
     try {
-      await addDoc(collection(db, "productos"), {
+      await addDoc(collection(db, "products"), {
         ...formulario,
         userId: user?.uid,
       });

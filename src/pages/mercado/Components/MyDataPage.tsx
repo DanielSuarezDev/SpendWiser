@@ -1,14 +1,7 @@
-import { useEffect } from "react";
-import { useAuth } from "../../../Contexts/AuthContext";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  writeBatch,
-  doc,
-} from "firebase/firestore";
+import { doc, addDoc, collection, writeBatch } from "firebase/firestore";
+
 import { db } from "../../../Config/firebase";
+import { useAuth } from "../../../Contexts/AuthContext";
 
 interface IData {
   id: string;
@@ -21,20 +14,6 @@ interface IData {
 interface ProductsByDate {
   [date: string]: IData[];
 }
-
-const fetchData = async (uid: string | undefined, setProducts: Function) => {
-  const q = query(
-    collection(db, "productos"),
-    where("userId", "==", uid || "")
-  );
-  const querySnapshot = await getDocs(q);
-
-  const fetchedData: IData[] = [];
-  querySnapshot.forEach((doc) => {
-    fetchedData.push({ id: doc.id, ...doc.data() } as IData);
-  });
-  setProducts(fetchedData);
-};
 
 const groupProductsByDate = (products: IData[]): ProductsByDate => {
   return products.reduce<ProductsByDate>((acc, item: IData) => {
@@ -53,19 +32,21 @@ const createHistoryDocuments = (
   productsByDate: ProductsByDate,
   uid: string | undefined
 ) => {
-  return Object.entries(productsByDate).map(([date, items]: [string, IData[]]) => {
-    return {
-      fecha: date,
-      total: items.reduce((acc, item) => acc + parseFloat(item.valor), 0),
-      items: items.map((item) => ({
-        id: item.id,
-        producto: item.descripcion,
-        valor: item.valor,
-        tienda: item.tienda || null,
-      })),
-      userId: uid,
-    };
-  });
+  return Object.entries(productsByDate).map(
+    ([date, items]: [string, IData[]]) => {
+      return {
+        fecha: date,
+        total: items.reduce((acc, item) => acc + parseFloat(item.valor), 0),
+        items: items.map((item) => ({
+          id: item.id,
+          producto: item.descripcion,
+          valor: item.valor,
+          tienda: item.tienda || null,
+        })),
+        userId: uid,
+      };
+    }
+  );
 };
 
 const moveDataToHistory = async (
@@ -73,60 +54,69 @@ const moveDataToHistory = async (
   uid: string | undefined,
   setProducts: Function
 ) => {
+  if (!uid) {
+    console.error("Error: invalid user ID");
+    return;
+  }
   const batch = writeBatch(db);
-  const productosRef = collection(db, "productos");
-  const historialRef = collection(db, "historial");
+  const productosRef = collection(db, "products");
+  const historialRef = collection(db, "history");
 
   const productsByDate = groupProductsByDate(products);
   const historyDocuments = createHistoryDocuments(productsByDate, uid);
 
-  historyDocuments.forEach((historialDoc) => {
-    // Eliminar todos los productos de la colección de productos y agregar el documento de historial
-    productsByDate[historialDoc.fecha].forEach((item) => {
-      const productoRef = doc(productosRef, item.id);
-      batch.delete(productoRef);
-    });
-
-    const newHistorialDocRef = doc(historialRef);
-    batch.set(newHistorialDocRef, historialDoc);
+  // Eliminar todos los productos de la colección de productos
+  // Eliminar todos los productos de la colección de productos
+  products.forEach((item) => {
+    console.log("Deleting item with ID:", item.id);
+    const productoRef = doc(productosRef, item.id);
+    batch.delete(productoRef);
   });
 
   try {
+    // Commit the batch to delete products
     await batch.commit();
+
+    // Add history documents
+    for (const historialDoc of historyDocuments) {
+      await addDoc(historialRef, historialDoc);
+    }
+
     setProducts([]);
   } catch (error) {
     console.error("Error moving data to history", error);
   }
 };
 
-
 const MyDataPage: React.FC<any> = ({ products, setProducts }) => {
   const { user } = useAuth();
 
-  useEffect(() => {
-    fetchData(user?.uid, setProducts);
-  }, [user?.uid]);
-
   return (
     <div className="container mx-auto p-4 mb-96">
-            <h1 className="text-2xl font-bold mb-4">Lista</h1>
+      <h1 className="text-2xl font-bold mb-4">Lista</h1>
       {products.length === 0 ? (
         <p className="text-lg">No se encontraron datos</p>
       ) : (
         <div>
-          <ul className="space-y-2">
-            {products.map((item: IData) => (
-              <li key={item.id} className="border rounded-lg p-3">
-                <h2 className="text-lg font-medium mb-2">{item.descripcion}</h2>
-                <div className="flex justify-between items-center">
-                  <p className="text-gray-600">{`$${item.valor}`}</p>
-                  {item.tienda && (
-                    <p className="text-sm text-gray-600">{`Tienda: ${item.tienda}`}</p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
+          {products.map((item: IData, index: any) => {
+            console.log("item.id", item);
+
+            return (
+              <ul className="space-y-2" key={index}>
+                <li className="border rounded-lg p-3">
+                  <h2 className="text-lg font-medium mb-2">
+                    {item.descripcion}
+                  </h2>
+                  <div className="flex justify-between items-center">
+                    <p className="text-gray-600">{`$${item.valor}`}</p>
+                    {item.tienda && (
+                      <p className="text-sm text-gray-600">{`Tienda: ${item.tienda}`}</p>
+                    )}
+                  </div>
+                </li>
+              </ul>
+            );
+          })}
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg mt-4"
             onClick={() => moveDataToHistory(products, user?.uid, setProducts)}

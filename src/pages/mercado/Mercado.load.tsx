@@ -21,28 +21,28 @@ export const MercadoLoad = () => {
     }
   }, [user, router]);
 
-
   useEffect(() => {
     if (!user) return;
 
     const db = getFirestore();
-    const q = query(collection(db, "productos"), where("userId", "==", user?.uid));
+    const q = query(collection(db, "products"), where("userId", "==", user?.uid));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let tempTotal = 0;
       let tempProductCount = 0;
       let tempProducts:any = [];
-    
+
       querySnapshot.forEach((doc) => {
         const productData = doc.data();
-        tempProducts.push(productData);
+        const productId = doc.id; // obtiene el id del producto
+        tempProducts.push({...productData, id: productId}); // agrega el id al objeto del producto
         const amount = parseFloat(productData.valor);
         if (!isNaN(amount)) {
           tempTotal += amount;
         }
         tempProductCount++;
       });
-    
+
       setTotal(tempTotal);
       setProductCount(tempProductCount);
       setProducts(tempProducts);
@@ -54,9 +54,7 @@ export const MercadoLoad = () => {
       }
     };
   }, [user]);
-  
-  
-  
+
   return (
     <Mercado total={total} productCount={productCount} products={products} setProducts={setProducts}/>
   )

@@ -1,9 +1,11 @@
-import FormProducts from "@/Components/Form/FormMerka";
 import React, { FC } from "react";
-import { formatCurrency } from "@/utils/formatNumber";
-import MyDataPage from "./Components/MyDataPage";
-import { FaShoppingBag, FaStar } from "react-icons/fa";
 import { ImStatsDots } from "react-icons/im";
+import { FaShoppingBag } from "react-icons/fa";
+
+import FormProducts from "@/Components/Form/FormMerka";
+import { formatCurrency } from "@/utils/formatNumber";
+
+import MyDataPage from "./Components/MyDataPage";
 
 export const Mercado: FC<any> = ({ total, productCount, products, setProducts }) => {
   const formatTotal = formatCurrency(total);
@@ -38,7 +40,7 @@ export const Mercado: FC<any> = ({ total, productCount, products, setProducts })
         </div>
       </div>
 
-      <div className="bg-white shadow-md rounded px-3 pt-6 pb-8 mb-4" h-100>
+      <div className="bg-white shadow-md rounded px-3 pt-6 pb-8 mb-4" h-100="true">
         <MyDataPage products={products} setProducts={setProducts} />
       </div>
       <div className="bg-white shadow-md rounded px-8 pt-6 pb-1 fixed bottom-0 w-full border-t-2 border-gray-200">

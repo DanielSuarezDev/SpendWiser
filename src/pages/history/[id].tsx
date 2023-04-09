@@ -15,7 +15,7 @@ const HistoryItemPage: React.FC = () => {
       if (typeof id !== 'string') return;
 
       try {
-        const docRef = doc(db, "historial", id as string); // Cambiado a 'historial'
+        const docRef = doc(db, "history", id as string); // Cambiado a 'historial'
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setHistorial({ id: docSnap.id, ...docSnap.data() });
