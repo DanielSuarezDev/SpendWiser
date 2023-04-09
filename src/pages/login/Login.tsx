@@ -1,4 +1,3 @@
-// pages/login.tsx
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../Contexts/AuthContext';
@@ -12,7 +11,7 @@ const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      router.push('/mercado');
+      router.push('/');
     }
   }, [user, router]);
 

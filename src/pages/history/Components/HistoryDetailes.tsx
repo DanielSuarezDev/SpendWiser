@@ -5,7 +5,7 @@ import { db } from '../../../Config/firebase';
 
 interface ICompra {
   id: string;
-  date: string;
+  fecha: string;
   total: number;
   items: { id: string; valor: string; producto: string; tienda?: string }[];
 }
@@ -45,7 +45,7 @@ const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">{`Historial del ${historial.fecha}`}</h1>
+      <h1 className="text-2xl font-bold mb-4">{`Historial del ${historial?.fecha}`}</h1>
 
       <p className="text-lg font-medium mb-2">Total: ${historial.total}</p>
 

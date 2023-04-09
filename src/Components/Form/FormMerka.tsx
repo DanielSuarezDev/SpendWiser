@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../Config/firebase";
 import { useAuth } from "../../Contexts/AuthContext";
@@ -9,7 +9,7 @@ interface FormularioState {
   tienda?: string;
 }
 
-const FormProducts: React.FC = () => {
+const FormProducts: React.FC<any> = () => {
   const { user } = useAuth();
 
   const [formulario, setFormulario] = useState<FormularioState>({
@@ -29,6 +29,7 @@ const FormProducts: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    e.stopPropagation(); // Agrega esto
 
     try {
       await addDoc(collection(db, "productos"), {
@@ -45,10 +46,20 @@ const FormProducts: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      setFormulario({
+        valor: "",
+        descripcion: "",
+        tienda: "",
+      });
+    };
+  }, []);
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-4">
-        <label htmlFor="valor" className="block text-gray-600 font-medium mb-1">
+      <div className="mb-1">
+        <label htmlFor="valor" className="text-gray-600 mb-1">
           Valor
         </label>
         <input
@@ -62,7 +73,7 @@ const FormProducts: React.FC = () => {
         />
       </div>
 
-      <div className="mb-4">
+      <div className="mb-1">
         <label
           htmlFor="descripcion"
           className="block text-gray-600 font-medium mb-1"
@@ -79,7 +90,7 @@ const FormProducts: React.FC = () => {
         ></textarea>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-1">
         <label
           htmlFor="tienda"
           className="block text-gray-600 font-medium mb-1"
