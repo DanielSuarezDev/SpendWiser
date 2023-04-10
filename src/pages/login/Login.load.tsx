@@ -6,3 +6,5 @@ export const LoginLoad = () => {
     <LoginPage />
   )
 }
+
+export default LoginLoad;

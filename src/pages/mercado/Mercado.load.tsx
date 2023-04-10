@@ -59,3 +59,6 @@ export const MercadoLoad = () => {
     <Mercado total={total} productCount={productCount} products={products} setProducts={setProducts}/>
   )
 }
+
+
+export default MercadoLoad;

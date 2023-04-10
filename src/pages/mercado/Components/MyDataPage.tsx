@@ -88,13 +88,13 @@ const moveDataToHistory = async (
   }
 };
 
-const MyDataPage: React.FC<any> = ({ products, setProducts }) => {
+export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
   const { user } = useAuth();
 
   return (
     <div className="container mx-auto p-4 mb-96">
       <h1 className="text-2xl font-bold mb-4">Lista</h1>
-      {products.length === 0 ? (
+      {products?.length === 0 ? (
         <p className="text-lg">No se encontraron datos</p>
       ) : (
         <div>

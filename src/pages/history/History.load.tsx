@@ -6,3 +6,6 @@ export const HistoryLoad = () => {
     <History />
   )
 }
+
+
+export default HistoryLoad;

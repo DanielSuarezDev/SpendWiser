@@ -49,3 +49,6 @@ export const Mercado: FC<any> = ({ total, productCount, products, setProducts })
     </div>
   );
 };
+
+
+export default Mercado;

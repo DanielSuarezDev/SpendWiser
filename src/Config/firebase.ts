@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics,isSupported } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-console.log('process.env.REACT_APP_API_KEY', process.env.REACT_APP_API_KEY)
 // Configuración de tu aplicación web de Firebase
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
