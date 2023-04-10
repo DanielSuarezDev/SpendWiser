@@ -6,11 +6,13 @@ import FormProducts from "@/Components/Form/FormMerka";
 import { formatCurrency } from "@/utils/formatNumber";
 
 import MyDataPage from "./Components/MyDataPage";
+import Link from "next/link";
 
 export const Mercado: FC<any> = ({ total, productCount, products, setProducts }) => {
   const formatTotal = formatCurrency(total);
   return (
     <div>
+
       <div className="mt-4 w-full lg:w-6/12 xl:w-3/12 px-5">
         <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
           <div className="flex-auto p-4">
@@ -29,12 +31,16 @@ export const Mercado: FC<any> = ({ total, productCount, products, setProducts })
                 </div>
               </div>
             </div>
-            <p className="text-sm text-blueGray-400 mt-4">
-              <span className="text-red-500 mr-2">
+            <p className="text-sm text-blueGray-400 mt-4 flex items-center justify-between">
+              <span className="text-blue-500 mr-2">
                 <FaShoppingBag />
                 {productCount}{" "}
-              </span>
               <span className="whitespace-nowrap"> Total productos </span>
+              </span>
+
+              <Link href="/history" passHref>
+                <div>Ver historial</div>
+              </Link>
             </p>
           </div>
         </div>

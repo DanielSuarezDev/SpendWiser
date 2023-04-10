@@ -1,6 +1,6 @@
 import { doc, addDoc, collection, writeBatch } from "firebase/firestore";
 
-import { db } from "../../../Config/firebase";
+import { auth, db } from "../../../Config/firebase";
 import { useAuth } from "../../../Contexts/AuthContext";
 
 interface IData {
@@ -88,6 +88,14 @@ const moveDataToHistory = async (
   }
 };
 
+const handleSingUot = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.error("Error signing out", error);
+  }
+};
+
 export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
   const { user } = useAuth();
 
@@ -122,6 +130,13 @@ export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
             onClick={() => moveDataToHistory(products, user?.uid, setProducts)}
           >
             Mover a historial
+          </button>
+
+          <button
+            className="bg-red-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg mt-4"
+            onClick={handleSingUot}
+          >
+            Cerrar sesión
           </button>
         </div>
       )}

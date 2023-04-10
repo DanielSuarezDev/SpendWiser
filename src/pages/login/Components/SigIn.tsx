@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-import { auth } from "../../../Config/firebase";
 import {
-  signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
-import { FaGoogle, FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
+import React, { useState } from "react";
+import {
+  FaGoogle,
+  FaEye,
+  FaEyeSlash,
+  FaEnvelope,
+  FaLock,
+} from "react-icons/fa";
+
+import { auth } from "../../../Config/firebase";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -37,7 +44,7 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full h-screen justify-center">
       <h2>Iniciar sesion</h2>
       <form
         onSubmit={handleSignInWithEmailAndPassword}
@@ -87,7 +94,7 @@ const SignIn: React.FC = () => {
       </form>
       <button
         onClick={handleSignInWithGoogle}
-        className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-3"
       >
         <FaGoogle className="mr-2 text-xl" /> Iniciar sesión con Google
       </button>
