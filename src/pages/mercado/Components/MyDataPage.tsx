@@ -1,4 +1,4 @@
-import { doc, addDoc, collection, writeBatch } from "firebase/firestore";
+import { doc, addDoc, collection, writeBatch, deleteDoc } from "firebase/firestore";
 
 import { auth, db } from "../../../Config/firebase";
 import { useAuth } from "../../../Contexts/AuthContext";
@@ -96,6 +96,15 @@ const handleSingUot = async () => {
   }
 };
 
+const deleteProduct = async (productId: string) => {
+  try {
+    const productRef = doc(db, "products", productId);
+    await deleteDoc(productRef);
+  } catch (error) {
+    console.error("Error deleting product", error);
+  }
+};
+
 export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
   const { user } = useAuth();
 
@@ -120,6 +129,12 @@ export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
                     {item.tienda && (
                       <p className="text-sm text-gray-600">{`Tienda: ${item.tienda}`}</p>
                     )}
+                     <button
+                      className="text-red-500 hover:text-red-700"
+                      onClick={() => deleteProduct(item.id)}
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 </li>
               </ul>
