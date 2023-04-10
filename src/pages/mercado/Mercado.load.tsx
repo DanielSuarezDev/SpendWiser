@@ -19,7 +19,7 @@ export const MercadoLoad = () => {
     if (!user) {
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
