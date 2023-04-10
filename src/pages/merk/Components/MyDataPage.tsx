@@ -1,12 +1,13 @@
 import { doc, addDoc, collection, writeBatch, deleteDoc } from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 import { auth, db } from "../../../Config/firebase";
 import { useAuth } from "../../../Contexts/AuthContext";
 
 interface IData {
   id: string;
-  valor: string;
-  descripcion: string;
+  value: string;
+  description: string;
   tienda?: string;
   fecha: string;
 }
@@ -36,11 +37,11 @@ const createHistoryDocuments = (
     ([date, items]: [string, IData[]]) => {
       return {
         fecha: date,
-        total: items.reduce((acc, item) => acc + parseFloat(item.valor), 0),
+        total: items.reduce((acc, item) => acc + parseFloat(item.value), 0),
         items: items.map((item) => ({
           id: item.id,
-          producto: item.descripcion,
-          valor: item.valor,
+          producto: item.description,
+          value: item.value,
           tienda: item.tienda || null,
         })),
         userId: uid,
@@ -65,8 +66,6 @@ const moveDataToHistory = async (
   const productsByDate = groupProductsByDate(products);
   const historyDocuments = createHistoryDocuments(productsByDate, uid);
 
-  // Eliminar todos los productos de la colección de productos
-  // Eliminar todos los productos de la colección de productos
   products.forEach((item) => {
     console.log("Deleting item with ID:", item.id);
     const productoRef = doc(productosRef, item.id);
@@ -96,22 +95,33 @@ const handleSingUot = async () => {
   }
 };
 
-const deleteProduct = async (productId: string) => {
+const deleteProduct = async (productId: string, setProducts: Function) => {
   try {
     const productRef = doc(db, "products", productId);
     await deleteDoc(productRef);
+    setProducts((prevState: IData[]) => prevState.filter((item) => item.id !== productId));
   } catch (error) {
     console.error("Error deleting product", error);
   }
 };
 
+
 export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
   const { user } = useAuth();
+const [isMounted, setIsMounted] = useState(true);
+
+  useEffect(() => {
+    return () => {
+      setIsMounted(false);
+    };
+  }, []);
+
+    const isClient = typeof window !== "undefined";
 
   return (
     <div className="container mx-auto p-4 mb-96">
       <h1 className="text-2xl font-bold mb-4">Lista</h1>
-      {products?.length === 0 ? (
+      {isClient && products?.length === 0 ? (
         <p className="text-lg">No se encontraron datos</p>
       ) : (
         <div>
@@ -122,16 +132,20 @@ export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
               <ul className="space-y-2" key={index}>
                 <li className="border rounded-lg p-3">
                   <h2 className="text-lg font-medium mb-2">
-                    {item.descripcion}
+                    {item.description}
                   </h2>
                   <div className="flex justify-between items-center">
-                    <p className="text-gray-600">{`$${item.valor}`}</p>
+                    <p className="text-gray-600">{`$${item.value}`}</p>
                     {item.tienda && (
                       <p className="text-sm text-gray-600">{`Tienda: ${item.tienda}`}</p>
                     )}
                      <button
                       className="text-red-500 hover:text-red-700"
-                      onClick={() => deleteProduct(item.id)}
+                       onClick={() => {
+                        
+                          deleteProduct(item.id, setProducts);
+                        
+                      }}
                     >
                       Eliminar
                     </button>
@@ -144,7 +158,7 @@ export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
             className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg mt-4"
             onClick={() => moveDataToHistory(products, user?.uid, setProducts)}
           >
-            Mover a historial
+            Guardar mercado
           </button>
 
           <button

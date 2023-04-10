@@ -1,6 +1,8 @@
 // components/SignUp.tsx
 import React, { useState } from 'react';
+
 import { auth } from '../../../Config/firebase';
+
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const SignUp: React.FC = () => {

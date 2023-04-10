@@ -5,18 +5,16 @@ import { db } from "../../Config/firebase";
 import { useAuth } from "../../Contexts/AuthContext";
 
 interface FormularioState {
-  valor: string;
-  descripcion: string;
-  tienda?: string;
+  value: string;
+  description: string;
 }
 
 const FormProducts: React.FC<any> = () => {
   const { user } = useAuth();
 
   const [formulario, setFormulario] = useState<FormularioState>({
-    valor: "",
-    descripcion: "",
-    tienda: "",
+    value: "",
+    description: "",
   });
 
   const handleChange = (
@@ -38,9 +36,8 @@ const FormProducts: React.FC<any> = () => {
         userId: user?.uid,
       });
       setFormulario({
-        valor: "",
-        descripcion: "",
-        tienda: "",
+        value: "",
+        description: "",
       });
     } catch (error) {
       console.error("Error adding product", error);
@@ -50,9 +47,8 @@ const FormProducts: React.FC<any> = () => {
   useEffect(() => {
     return () => {
       setFormulario({
-        valor: "",
-        descripcion: "",
-        tienda: "",
+        value: "",
+        description: "",
       });
     };
   }, []);
@@ -60,14 +56,14 @@ const FormProducts: React.FC<any> = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-1">
-        <label htmlFor="valor" className="text-gray-600 mb-1">
+        <label htmlFor="value" className="text-gray-600 mb-1">
           Valor
         </label>
         <input
           type="number"
-          id="valor"
-          name="valor"
-          value={formulario.valor}
+          id="value"
+          name="value"
+          value={formulario.value}
           onChange={handleChange}
           required
           className="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -76,34 +72,17 @@ const FormProducts: React.FC<any> = () => {
 
       <div className="mb-1">
         <label
-          htmlFor="descripcion"
+          htmlFor="description"
           className="block text-gray-600 font-medium mb-1"
         >
           Descripción
         </label>
-        <textarea
-          id="descripcion"
-          name="descripcion"
-          value={formulario.descripcion}
+        <input
+          id="description"
+          name="description"
+          value={formulario.description}
           onChange={handleChange}
           required
-          className="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
-        ></textarea>
-      </div>
-
-      <div className="mb-1">
-        <label
-          htmlFor="tienda"
-          className="block text-gray-600 font-medium mb-1"
-        >
-          Tienda
-        </label>
-        <input
-          type="text"
-          id="tienda"
-          name="tienda"
-          value={formulario.tienda}
-          onChange={handleChange}
           className="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>

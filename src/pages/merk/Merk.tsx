@@ -31,7 +31,7 @@ export const Mercado: FC<any> = ({ total, productCount, products, setProducts })
                 </div>
               </div>
             </div>
-            <p className="text-sm text-blueGray-400 mt-4 flex items-center justify-between">
+            <div className="text-sm text-blueGray-400 mt-4 flex items-center justify-between">
               <span className="text-blue-500 mr-2">
                 <FaShoppingBag />
                 {productCount}{" "}
@@ -39,9 +39,9 @@ export const Mercado: FC<any> = ({ total, productCount, products, setProducts })
               </span>
 
               <Link href="/history" passHref>
-                <div>Ver historial</div>
+                Ver historial
               </Link>
-            </p>
+            </div>
           </div>
         </div>
       </div>

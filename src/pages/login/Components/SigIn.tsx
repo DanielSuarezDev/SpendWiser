@@ -3,14 +3,14 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import React, { useState } from "react";
 import {
-  FaGoogle,
   FaEye,
+  FaLock,
+  FaGoogle,
   FaEyeSlash,
   FaEnvelope,
-  FaLock,
 } from "react-icons/fa";
+import React, { useState } from "react";
 
 import { auth } from "../../../Config/firebase";
 

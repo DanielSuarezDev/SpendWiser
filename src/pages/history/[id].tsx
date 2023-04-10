@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { collection, doc, getDoc } from "firebase/firestore";
+
 import { db } from "../../Config/firebase";
+
 import HistoryDetails from "./Components/HistoryDetailes";
 
 const HistoryItemPage: React.FC = () => {
@@ -15,7 +17,7 @@ const HistoryItemPage: React.FC = () => {
       if (typeof id !== 'string') return;
 
       try {
-        const docRef = doc(db, "history", id as string); // Cambiado a 'historial'
+        const docRef = doc(db, "history", id as string);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setHistorial({ id: docSnap.id, ...docSnap.data() });

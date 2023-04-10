@@ -5,7 +5,7 @@ import { getFirestore, collection, query, where, getDocs, onSnapshot } from 'fir
 
 import { useAuth } from '../../Contexts/AuthContext';
 
-import { Mercado } from './Mercado'
+import { Mercado } from './Merk'
 
 export const MercadoLoad = () => {
   const { user } = useAuth();
@@ -36,7 +36,7 @@ export const MercadoLoad = () => {
         const productData = doc.data();
         const productId = doc.id; // obtiene el id del producto
         tempProducts.push({...productData, id: productId}); // agrega el id al objeto del producto
-        const amount = parseFloat(productData.valor);
+        const amount = parseFloat(productData.value);
         if (!isNaN(amount)) {
           tempTotal += amount;
         }

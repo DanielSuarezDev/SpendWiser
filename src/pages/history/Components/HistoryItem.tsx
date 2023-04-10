@@ -12,9 +12,9 @@ const HistoryItem: React.FC<IHistoryItemProps> = ({ id, date, total }) => {
       <h2 className="text-lg font-medium mb-2">{`Compra del ${date}`}</h2>
       <p className="text-gray-600">{`Total: $${total}`}</p>
       <Link href={`/history/${id}`} passHref>
-        <div className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 cursor-pointer">
+        {/* <div className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 cursor-pointer"> */}
           Ver detalles
-        </div>
+        {/* </div> */}
       </Link>
     </div>
   );

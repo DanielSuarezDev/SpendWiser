@@ -7,7 +7,7 @@ interface ICompra {
   id: string;
   fecha: string;
   total: number;
-  items: { id: string; valor: string; producto: string; tienda?: string }[];
+  items: { id: string; value: string; producto: string; tienda?: string }[];
 }
 
 interface HistoryDetailsProps {
@@ -16,7 +16,6 @@ interface HistoryDetailsProps {
 
 const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
   const [historial, setHistorial] = useState<ICompra | null>(null);
-  console.log('history', historial)
   const router = useRouter();
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
           <li key={item.id} className="border rounded-lg p-4">
             <h2 className="text-lg font-medium mb-2">{item.producto}</h2>
             <div className="flex justify-between items-center">
-              <p className="text-gray-600">{`$${item.valor}`}</p>
+              <p className="text-gray-600">{`$${item.value}`}</p>
               {item.tienda && <p className="text-gray-600">{`Tienda: ${item.tienda}`}</p>}
             </div>
           </li>

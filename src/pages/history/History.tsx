@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useAuth } from "../../Contexts/AuthContext";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../Config/firebase";
-import HistoryItem from "./Components/HistoryItem";
 import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
+import { db } from "../../Config/firebase";
+import { useAuth } from "../../Contexts/AuthContext";
+
+import HistoryItem from "./Components/HistoryItem";
 
 interface ICompra {
   id: string;
   fecha: string;
   total: number;
-  productos: { id: string; valor: string; producto: string; tienda?: string }[];
+  productos: { id: string; value: string; producto: string; tienda?: string }[];
 }
 
 const History: React.FC = () => {
   const { user } = useAuth();
   const [compras, setCompras] = useState<ICompra[]>([]);
-  console.log("compras", compras);
   useEffect(() => {
     const fetchCompras = async () => {
       const q = query(
@@ -38,7 +39,7 @@ const History: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <Link href="/" passHref>
-        <div>Volver</div>
+        Volver
       </Link>
       <h1 className="text-2xl font-bold mb-4">Historial de compras</h1>
       {compras.length === 0 ? (

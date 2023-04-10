@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
       {showSignUp ? (
         <>
           <SignUp />
-          <p>
+          <div>
             ¿Ya tienes una cuenta?{' '}
             <button
               className="text-blue-500 underline"
@@ -32,12 +32,12 @@ const LoginPage: React.FC = () => {
             >
               Inicia sesión
             </button>
-          </p>
+          </div>
         </>
       ) : (
         <>
           <SignIn />
-          <p>
+          <div>
             ¿No tienes una cuenta?{' '}
             <button
               className="text-blue-500 underline"
@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
             >
               Crea una
             </button>
-          </p>
+          </div>
         </>
       )}
     </div>
