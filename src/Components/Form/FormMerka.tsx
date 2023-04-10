@@ -67,6 +67,7 @@ const FormProducts: React.FC<any> = () => {
           onChange={handleChange}
           required
           className="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          inputMode="numeric"
         />
       </div>
 
