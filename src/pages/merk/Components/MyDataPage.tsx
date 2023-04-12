@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { auth, db } from "../../../Config/firebase";
 import { useAuth } from "../../../Contexts/AuthContext";
 
+
+// Las interfaces mejor moverlas a un archivo de utils
 interface IData {
   id: string;
   value: string;
@@ -16,6 +18,7 @@ interface ProductsByDate {
   [date: string]: IData[];
 }
 
+// Esta funcion la colocaria en un archivo de utils
 const groupProductsByDate = (products: IData[]): ProductsByDate => {
   return products.reduce<ProductsByDate>((acc, item: IData) => {
     const date = item.fecha
@@ -29,6 +32,7 @@ const groupProductsByDate = (products: IData[]): ProductsByDate => {
   }, {});
 };
 
+// Esta funcion la colocaria en un archivo de utils
 const createHistoryDocuments = (
   productsByDate: ProductsByDate,
   uid: string | undefined
@@ -87,6 +91,7 @@ const moveDataToHistory = async (
   }
 };
 
+// Esta funcion la colocaria en un archivo de hooks para la comunicacion con firebase
 const handleSingUot = async () => {
   try {
     await auth.signOut();
@@ -95,6 +100,7 @@ const handleSingUot = async () => {
   }
 };
 
+// Esta funcion la colocaria en un archivo de hooks para la comunicacion con firebase
 const deleteProduct = async (productId: string, setProducts: Function) => {
   try {
     const productRef = doc(db, "products", productId);

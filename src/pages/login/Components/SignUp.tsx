@@ -6,6 +6,8 @@ import { auth } from '../../../Config/firebase';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const SignUp: React.FC = () => {
+
+  // Recomiendo usar react-hook-form para todos los formularios
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -56,4 +58,5 @@ const SignUp: React.FC = () => {
   );
 };
 
+// Mejor exportar la constante como export const SignUp en la linea 8, para hacer una importacion explicita donde lo vayas a usar
 export default SignUp;

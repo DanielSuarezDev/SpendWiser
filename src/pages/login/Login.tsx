@@ -15,10 +15,12 @@ const LoginPage: React.FC = () => {
     }
   }, [user, router]);
 
+  // TODO: useCallback
   const handleToggleForm = () => {
     setShowSignUp((prevShowSignUp) => !prevShowSignUp);
   };
 
+  // De la linea 26 a la 53 puede ser mejor moverlo a un useMemo para que esa condicion no se este evaluando en cada render
   return (
     <div className="container mx-auto p-4">
       {showSignUp ? (
