@@ -44,39 +44,33 @@ const SignIn: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-full h-screen justify-center">
-      <h2>Iniciar sesion</h2>
+    <div className="flex flex-col items-center w-full justify-center">
+      <h2 className="mt-10 mb-4 text-3xl text-slate-700">Iniciar sesion</h2>
       <form
         onSubmit={handleSignInWithEmailAndPassword}
         className="flex flex-col space-y-4 w-full md:w-1/2 lg:w-1/3"
       >
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <FaEnvelope className="h-6 w-6 text-gray-400" />
-          </div>
           <input
             type="email"
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-gray-300 p-2 rounded w-full pl-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 p-2 h-12 rounded-lg w-full pl-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
         <div className="relative">
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3">
-            <FaLock className="h-6 w-6 text-gray-400" />
-          </div>
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Contraseña"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border border-gray-300 p-2 rounded w-full pl-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 p-2 h-12 rounded-lg w-full pl-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
             type="button"
             onClick={toggleShowPassword}
-            className="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none"
+            className="absolute inset-y-0 h-12 right-0 flex items-center pr-3 focus:outline-none"
           >
             {showPassword ? (
               <FaEyeSlash className="h-6 w-6 text-gray-400" />
@@ -87,14 +81,14 @@ const SignIn: React.FC = () => {
         </div>
         <button
           type="submit"
-          className="bg-green-500 text-white py-2 px-4 rounded"
+          className="bg-blue-800 text-white py-2 px-4 rounded h-12"
         >
-          Iniciar sesión con correo electrónico
+          Iniciar sesión
         </button>
       </form>
       <button
         onClick={handleSignInWithGoogle}
-        className="flex items-center justify-center w-full px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-3"
+        className="flex items-center justify-center w-full px-4 py-2 text-white bg-black rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 mt-3 h-12"
       >
         <FaGoogle className="mr-2 text-xl" /> Iniciar sesión con Google
       </button>

@@ -1,10 +1,12 @@
-import '../styles/globals.css'
-import { AuthProvider } from '../Contexts/AuthContext';
+import "../styles/globals.css";
+import { AuthProvider } from "../Contexts/AuthContext";
 
 function MyApp({ Component, pageProps }: any) {
   return (
     <AuthProvider>
-      <Component {...pageProps} />
+      <div className="bg-global-bg">
+        <Component {...pageProps} />
+      </div>
     </AuthProvider>
   );
 }
