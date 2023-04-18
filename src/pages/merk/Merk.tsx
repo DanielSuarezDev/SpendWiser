@@ -45,7 +45,7 @@ export const Mercado: FC<any> = ({
         <MyDataPage products={products} setProducts={setProducts} />
       </div>
 
-      <div className="bg-white shadow-md rounded px-8 pt-2 pb-2 bottom-0 w-full border-t-2 border-gray-200">
+      <div className="bg-white shadow-md rounded px-8 pt-2 pb-2 w-full border-t-2 border-gray-200 absolute bottom-0">
         {showForm ? (
           <>
             <div
