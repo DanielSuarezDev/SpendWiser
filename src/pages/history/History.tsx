@@ -35,7 +35,7 @@ const History: React.FC = () => {
           id: doc.id,
           name: data.name,
           fecha: format(new Date(data.fecha), "dd 'de' MMMM 'de' yyyy"),
-          total: data.total,
+          total: data?.total,
           productos: data.productos,
         });
       });
@@ -63,7 +63,7 @@ const History: React.FC = () => {
   };
 
   const getTotalByDate = (compras: ICompra[]): string => {
-    const total = compras.reduce((acc, compra) => acc + compra.total, 0);
+    const total = compras.reduce((acc, compra) => acc + compra?.total, 0);
     return total.toLocaleString("en-US");
   };
 

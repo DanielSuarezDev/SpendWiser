@@ -10,18 +10,18 @@ interface IHistoryItemProps {
 
 const HistoryItem: React.FC<IHistoryItemProps> = ({ compra }) => {
 
-  const total = formatCurrency(compra.total);
+  const total = formatCurrency(compra?.total);
   return (
     <div className="rounded-lg p-2 w-full h-full bg-white shadow-lg mb-3">
-      <Link href={`/history/${compra.id}`} passHref>
+      <Link href={`/history/${compra?.id}`} passHref>
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <FcMoneyTransfer size={30} />
             <div className="ml-4">
               <h3 className="text-gray-700 font-bold text-lg capitalize">
-                {compra.name}
+                {compra?.name}
               </h3>
-              <p className="text-green-800 text-sm -mt-1">{total}</p>
+              <p className="text-green-800 text-sm -mt-1">{total ?? 0}</p>
             </div>
           </div>
           <HiChevronRight size={20} />
