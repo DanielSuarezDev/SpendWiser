@@ -11,19 +11,23 @@ interface FormularioState {
 
 const FormProducts: React.FC<any> = () => {
   const { user } = useAuth();
+  const [displayValue, setDisplayValue] = useState("");
 
   const [formulario, setFormulario] = useState<FormularioState>({
     value: "",
     description: "",
   });
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormulario({
-      ...formulario,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    if (name === "value") {
+      const onlyNumbers = value.replace(/[^0-9]/g, "");
+      setFormulario({ ...formulario, value: onlyNumbers });
+      setDisplayValue(onlyNumbers.replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+    } else {
+      setFormulario({ ...formulario, [name]: value });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,6 +43,7 @@ const FormProducts: React.FC<any> = () => {
         value: "",
         description: "",
       });
+      setDisplayValue("");
     } catch (error) {
       console.error("Error adding product", error);
     }
@@ -56,14 +61,12 @@ const FormProducts: React.FC<any> = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-1">
-        <label htmlFor="value" className="text-gray-600 mb-1">
-          Valor
-        </label>
         <input
-          type="number"
+          placeholder="Valor"
+          type="text"
           id="value"
           name="value"
-          value={formulario.value}
+          value={displayValue}
           onChange={handleChange}
           required
           className="border border-gray-300 p-2 rounded w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -72,13 +75,8 @@ const FormProducts: React.FC<any> = () => {
       </div>
 
       <div className="mb-1">
-        <label
-          htmlFor="description"
-          className="block text-gray-600 font-medium mb-1"
-        >
-          Descripción
-        </label>
         <input
+          placeholder="Descripción"
           id="description"
           name="description"
           value={formulario.description}
@@ -90,7 +88,7 @@ const FormProducts: React.FC<any> = () => {
 
       <button
         type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200"
+        className="bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 w-full"
       >
         Guardar
       </button>

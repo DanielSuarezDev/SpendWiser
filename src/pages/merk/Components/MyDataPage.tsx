@@ -1,8 +1,10 @@
-import { doc, addDoc, collection, writeBatch, deleteDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import { ShopCartIcon } from "@/assets/icons";
+import { doc, deleteDoc } from "firebase/firestore";
+import { formatCurrency } from "@/utils/formatNumber";
 
-import { auth, db } from "../../../Config/firebase";
-import { useAuth } from "../../../Contexts/AuthContext";
+import { db } from "../../../Config/firebase";
 
 interface IData {
   id: string;
@@ -12,103 +14,20 @@ interface IData {
   fecha: string;
 }
 
-interface ProductsByDate {
-  [date: string]: IData[];
-}
-
-const groupProductsByDate = (products: IData[]): ProductsByDate => {
-  return products.reduce<ProductsByDate>((acc, item: IData) => {
-    const date = item.fecha
-      ? item.fecha.slice(0, 10)
-      : new Date().toISOString().slice(0, 10);
-    if (!acc[date]) {
-      acc[date] = [];
-    }
-    acc[date].push(item);
-    return acc;
-  }, {});
-};
-
-const createHistoryDocuments = (
-  productsByDate: ProductsByDate,
-  uid: string | undefined
-) => {
-  return Object.entries(productsByDate).map(
-    ([date, items]: [string, IData[]]) => {
-      return {
-        fecha: date,
-        total: items.reduce((acc, item) => acc + parseFloat(item.value), 0),
-        items: items.map((item) => ({
-          id: item.id,
-          producto: item.description,
-          value: item.value,
-          tienda: item.tienda || null,
-        })),
-        userId: uid,
-      };
-    }
-  );
-};
-
-const moveDataToHistory = async (
-  products: IData[],
-  uid: string | undefined,
-  setProducts: Function
-) => {
-  if (!uid) {
-    console.error("Error: invalid user ID");
-    return;
-  }
-  const batch = writeBatch(db);
-  const productosRef = collection(db, "products");
-  const historialRef = collection(db, "history");
-
-  const productsByDate = groupProductsByDate(products);
-  const historyDocuments = createHistoryDocuments(productsByDate, uid);
-
-  products.forEach((item) => {
-    console.log("Deleting item with ID:", item.id);
-    const productoRef = doc(productosRef, item.id);
-    batch.delete(productoRef);
-  });
-
-  try {
-    // Commit the batch to delete products
-    await batch.commit();
-
-    // Add history documents
-    for (const historialDoc of historyDocuments) {
-      await addDoc(historialRef, historialDoc);
-    }
-
-    setProducts([]);
-  } catch (error) {
-    console.error("Error moving data to history", error);
-  }
-};
-
-const handleSingUot = async () => {
-  try {
-    await auth.signOut();
-  } catch (error) {
-    console.error("Error signing out", error);
-  }
-};
-
 const deleteProduct = async (productId: string, setProducts: Function) => {
   try {
     const productRef = doc(db, "products", productId);
     await deleteDoc(productRef);
-    setProducts((prevState: IData[]) => prevState.filter((item) => item.id !== productId));
+    setProducts((prevState: IData[]) =>
+      prevState.filter((item) => item.id !== productId)
+    );
   } catch (error) {
     console.error("Error deleting product", error);
   }
 };
 
-
 export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
-  const { user } = useAuth();
-const [isMounted, setIsMounted] = useState(true);
+  const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -116,57 +35,39 @@ const [isMounted, setIsMounted] = useState(true);
     };
   }, []);
 
-    const isClient = typeof window !== "undefined";
+  const isClient = typeof window !== "undefined";
 
   return (
     <div className="container mx-auto p-4 mb-96">
-      <h1 className="text-2xl font-bold mb-4">Lista</h1>
+      <h2 className="text-2xl font-bold mb-4">Lista</h2>
       {isClient && products?.length === 0 ? (
         <p className="text-lg">No se encontraron datos</p>
       ) : (
         <div>
           {products.map((item: IData, index: any) => {
-            console.log("item.id", item);
-
+            const value = formatCurrency(item.value);
             return (
-              <ul className="space-y-2" key={index}>
-                <li className="border rounded-lg p-3">
-                  <h2 className="text-lg font-medium mb-2">
-                    {item.description}
-                  </h2>
-                  <div className="flex justify-between items-center">
-                    <p className="text-gray-600">{`$${item.value}`}</p>
-                    {item.tienda && (
-                      <p className="text-sm text-gray-600">{`Tienda: ${item.tienda}`}</p>
-                    )}
-                     <button
-                      className="text-red-500 hover:text-red-700"
-                       onClick={() => {
-                        
-                          deleteProduct(item.id, setProducts);
-                        
-                      }}
-                    >
-                      Eliminar
-                    </button>
+              <div key={index} className="mb-2">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <ShopCartIcon />
+                    <div className="flex flex-col ml-2">
+                      <h3 className="text-gray-700 font-bold text-lg capitalize">
+                        {item.description}
+                      </h3>
+                      <p className="text-green-800 text-sm">{value}</p>
+                    </div>
                   </div>
-                </li>
-              </ul>
+                  <FaTrashAlt
+                    className="text-red-500 hover:text-red-700"
+                    onClick={() => {
+                      deleteProduct(item.id, setProducts);
+                    }}
+                  />
+                </div>
+              </div>
             );
           })}
-          <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg mt-4"
-            onClick={() => moveDataToHistory(products, user?.uid, setProducts)}
-          >
-            Guardar mercado
-          </button>
-
-          <button
-            className="bg-red-500 hover:bg-blue-600 text-white font-medium px-4 py-2 rounded-lg mt-4"
-            onClick={handleSingUot}
-          >
-            Cerrar sesión
-          </button>
         </div>
       )}
     </div>

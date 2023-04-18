@@ -1,12 +1,13 @@
 import "../styles/globals.css";
 import { AuthProvider } from "../Contexts/AuthContext";
+import ToastProvider from "@/Contexts/ToastContext";
 
 function MyApp({ Component, pageProps }: any) {
   return (
     <AuthProvider>
-      <div className="bg-global-bg">
+      <ToastProvider>
         <Component {...pageProps} />
-      </div>
+      </ToastProvider>
     </AuthProvider>
   );
 }
