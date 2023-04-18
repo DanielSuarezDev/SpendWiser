@@ -16,6 +16,7 @@ const HistoryItemPage: React.FC = () => {
 
   const handleDelete = async () => {
     try {
+      //@ts-ignore
       const docRef = doc(db, "history", id);
       await deleteDoc(docRef);
       router.push("/history");
