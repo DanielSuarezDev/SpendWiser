@@ -26,7 +26,7 @@ export const Mercado: FC<any> = ({
     setShowForm(!showForm);
   };
   return (
-    <>
+    <div>
       <div className="flex flex-col h-screen">
         <ToastContainer />
         <div className="fixed top-0 left-0 right-0">
@@ -68,7 +68,7 @@ export const Mercado: FC<any> = ({
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

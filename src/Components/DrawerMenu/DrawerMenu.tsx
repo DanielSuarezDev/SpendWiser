@@ -6,7 +6,7 @@ import { CiLogout } from "react-icons/ci";
 
 const DrawerMenu: FC<any> = ({ isOpen, setIsOpen , handleSingUot}) => {
   return (
-    <>
+    <div className="z-50" style={{ zIndex: 150 }}>
       <button
         className="fixed z-10 inset-0 overflow-hidden bg-black bg-opacity-50"
         aria-hidden="true"
@@ -24,14 +24,14 @@ const DrawerMenu: FC<any> = ({ isOpen, setIsOpen , handleSingUot}) => {
               <AiOutlineShoppingCart className="text-2xl mr-2" />
               Historial
             </Link>
-          </div>
-          <div className="flex justify-center items-center" onClick={handleSingUot}>
+          <div className="flex justify-center items-center mt-6" onClick={handleSingUot}>
             <CiLogout className="text-red-500" />
             <p className="ml-3 text-red-500">Cerrar sesion</p>
           </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
