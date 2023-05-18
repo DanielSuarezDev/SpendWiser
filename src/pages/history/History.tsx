@@ -34,7 +34,7 @@ const History: React.FC = () => {
         fetchedCompras.push({
           id: doc.id,
           name: data.name,
-          fecha: format(new Date(data.fecha), "dd 'de' MMMM 'de' yyyy"),
+          fecha: data.fecha,
           total: data?.total,
           productos: data.productos,
         });
