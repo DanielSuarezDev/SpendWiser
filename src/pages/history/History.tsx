@@ -64,11 +64,11 @@ const History: React.FC = () => {
 
   const getTotalByDate = (compras: ICompra[]): string => {
     const total = compras.reduce((acc, compra) => acc + compra?.total, 0);
-    return total.toLocaleString("en-US");
+    return total.toLocaleString("es-CO", { style: "currency", currency: "COP" });
   };
 
   const groupedCompras = groupComprasByDate(compras);
-
+console.log(groupedCompras)
   return (
     <div className="flex flex-col p-2 h-full">
       <Link href="/" passHref className="flex justify-center items-center">
