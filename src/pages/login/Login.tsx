@@ -22,33 +22,16 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4 flex flex-col items-center justify-center h-screen">
-        <Image src={Logo} alt="Logo" width={116} height={136} />
+    // <div className="p-4 flex flex-col items-center justify-center h-screen">
+      <div >
+        {/* <Image src={Logo} alt="Logo" width={116} height={136} /> */}
         {showSignUp ? (
           <>
-            <SignUp />
-            <div className="mt-4">
-              ¿Ya tienes una cuenta?{" "}
-              <button
-                className="text-blue-500 underline"
-                onClick={handleToggleForm}
-              >
-                Inicia sesión
-              </button>
-            </div>
+            <SignUp handleToggleForm={handleToggleForm} />
           </>
         ) : (
           <>
-            <SignIn />
-            <div className="mt-4">
-              ¿No tienes una cuenta?{" "}
-              <button
-                className="text-blue-500 underline"
-                onClick={handleToggleForm}
-              >
-                Crea una cuenta
-              </button>
-            </div>
+            <SignIn handleToggleForm={handleToggleForm} />
           </>
         )}
     </div>

@@ -6,7 +6,7 @@ import { CiLogout } from "react-icons/ci";
 
 const DrawerMenu: FC<any> = ({ isOpen, setIsOpen, handleSingUot }) => {
   return (
-    <div className="absolute top-10 right-5 flex flex-col w-52 bg-white shadow-xl rounded-lg p-2">
+    <div className="absolute top-10 right-5 flex flex-col w-52 bg-white shadow-xl rounded-lg p-2 z-50">
       <IoMdClose
         onClick={() => setIsOpen(!isOpen)}
         className="absolute right-4"
@@ -15,7 +15,7 @@ const DrawerMenu: FC<any> = ({ isOpen, setIsOpen, handleSingUot }) => {
         <div>
           <Link href="/merk" className="flex mb-4">
             <AiOutlineHome className="text-2xl mr-2" />
-            Inicio
+            Registrar Compras
           </Link>
           <Link href="/history" className="flex">
             <AiOutlineShoppingCart className="text-2xl mr-2" />

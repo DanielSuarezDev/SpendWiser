@@ -32,7 +32,7 @@ export const Mercado: FC<any> = ({
       <div className="flex flex-col h-screen">
         <ToastContainer />
         <div className="fixed top-0 left-0 right-0">
-          <Header handleSingUot={handleSingUot} photo={user?.photoURL} />
+          <Header handleSingUot={handleSingUot} photo={user?.photoURL} user={user} />
           <div className="w-full flex justify-center">
             <CardTotal
               totalValue={formatTotal}
