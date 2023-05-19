@@ -93,7 +93,7 @@ export const HomePage = () => {
           <Image
             src={HeroImage}
             alt="hero"
-            className="w-60 h-60 animate-pulse mt-14"
+            className="w-60 h-60 mt-14"
             loading="lazy"
           />
         </div>
