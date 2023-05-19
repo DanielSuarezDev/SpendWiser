@@ -95,6 +95,7 @@ export const HomePage = () => {
             alt="hero"
             className="w-60 h-60 mt-14"
             loading="lazy"
+            priority={true}
           />
         </div>
 
