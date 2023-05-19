@@ -1,8 +1,9 @@
+import { FC } from "react";
 import Link from "next/link";
-import { FC, useState } from "react";
+import { BsShop } from "react-icons/bs";
+import { CiLogout } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
-import { CiLogout } from "react-icons/ci";
 
 const DrawerMenu: FC<any> = ({ isOpen, setIsOpen, handleSingUot }) => {
   return (
@@ -13,8 +14,12 @@ const DrawerMenu: FC<any> = ({ isOpen, setIsOpen, handleSingUot }) => {
       />
       <div className="p-6 flex flex-col justify-between items-start h-full">
         <div>
-          <Link href="/merk" className="flex mb-4">
+        <Link href="/" className="flex mb-4">
             <AiOutlineHome className="text-2xl mr-2" />
+            Home
+          </Link>
+          <Link href="/merk" className="flex mb-4">
+            <BsShop className="text-2xl mr-2" />
             Registrar Compras
           </Link>
           <Link href="/history" className="flex">
