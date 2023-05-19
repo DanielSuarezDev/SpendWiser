@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { ShopCartIcon } from "@/assets/icons";
-import { doc, deleteDoc } from "firebase/firestore";
 import { formatCurrency } from "@/utils/formatNumber";
-
-import { db } from "../../../Config/firebase";
+import useProductOperations from "@/Hook/useProductOperations";
 
 interface IData {
   id: string;
@@ -14,19 +12,8 @@ interface IData {
   fecha: string;
 }
 
-const deleteProduct = async (productId: string, setProducts: Function) => {
-  try {
-    const productRef = doc(db, "products", productId);
-    await deleteDoc(productRef);
-    setProducts((prevState: IData[]) =>
-      prevState.filter((item) => item.id !== productId)
-    );
-  } catch (error) {
-    console.error("Error deleting product", error);
-  }
-};
-
 export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
+  const { deleteProduct } = useProductOperations(setProducts);
   const [isMounted, setIsMounted] = useState(true);
 
   useEffect(() => {
@@ -61,7 +48,7 @@ export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
                   <FaTrashAlt
                     className="text-red-500 hover:text-red-700"
                     onClick={() => {
-                      deleteProduct(item.id, setProducts);
+                      deleteProduct(item.id);
                     }}
                   />
                 </div>

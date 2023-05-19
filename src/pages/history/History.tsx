@@ -1,82 +1,24 @@
-import { format } from "date-fns";
-import React, { useState, useEffect } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
-
-import { db } from "../../Config/firebase";
-import { useAuth } from "../../Contexts/AuthContext";
-import HistoryItem from "./Components/HistoryItem";
-import { BsArrowLeft } from "react-icons/bs";
+import React from 'react';
 import Link from "next/link";
+import { BsArrowLeft } from "react-icons/bs";
 
-interface ICompra {
-  id: string;
-  fecha: string;
-  total: number;
-  name?: string;
-  productos: { id: string; value: string; producto: string; tienda?: string }[];
-}
+import HistoryItem from "./Components/HistoryItem";
+import usePurchaseHistory from '@/Hook/usePurchaseHistory';
+
 
 const History: React.FC = () => {
-  const { user } = useAuth();
-  const [compras, setCompras] = useState<ICompra[]>([]);
+  const { comprasGrouped, getTotalByDate } = usePurchaseHistory();
 
-  useEffect(() => {
-    const fetchCompras = async () => {
-      const q = query(
-        collection(db, "history"),
-        where("userId", "==", user?.uid)
-      );
-      const querySnapshot = await getDocs(q);
-      const fetchedCompras: ICompra[] = [];
-
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        fetchedCompras.push({
-          id: doc.id,
-          name: data.name,
-          fecha: data.fecha,
-          total: data?.total,
-          productos: data.productos,
-        });
-      });
-
-      setCompras(fetchedCompras);
-    };
-
-    if (user?.uid) {
-      fetchCompras();
-    }
-  }, [user?.uid]);
-
-  const groupComprasByDate = (compras: ICompra[]) => {
-    const groupedCompras: { [date: string]: ICompra[] } = {};
-
-    compras.forEach((compra) => {
-      const date = compra.fecha.slice(0, 10);
-      if (!groupedCompras[date]) {
-        groupedCompras[date] = [];
-      }
-      groupedCompras[date].push(compra);
-    });
-
-    return groupedCompras;
-  };
-
-  const getTotalByDate = (compras: ICompra[]): string => {
-    const total = compras.reduce((acc, compra) => acc + compra?.total, 0);
-    return total.toLocaleString("es-CO", { style: "currency", currency: "COP" });
-  };
-
-  const groupedCompras = groupComprasByDate(compras);
-console.log(groupedCompras)
   return (
     <div className="flex flex-col p-2 h-full">
-      <Link href="/merk" passHref className="flex justify-center items-center">
-        <BsArrowLeft />
-        <h1 className="text-xl my-4 ml-2">Historial de compras</h1>
+      <Link href="/merk" passHref>
+        <div className="flex justify-center items-center">
+          <BsArrowLeft />
+          <h1 className="text-xl my-4 ml-2">Historial de compras</h1>
+        </div>
       </Link>
 
-      {Object.entries(groupedCompras).map(([date, compras]) => {
+      {Object.entries(comprasGrouped).map(([date, compras]: [string, any[]]) => {
         return (
           <div key={date}>
             <div className="flex justify-between items-center">

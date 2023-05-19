@@ -1,16 +1,17 @@
-import { Header } from "@/Components/Header/Header";
-import Image from "next/image";
 import React from "react";
-
-import HeroImage from "../../assets/images/hero.png";
-import CheckImage from "../../assets/images/check.png";
-import HistoryImage from "../../assets/images/history.png";
-import BoxImage from "../../assets/images/box.png";
-import AllToOneImage from "../../assets/images/allToOne.png";
-import { Item } from "@/Components/Item/Item";
 import Link from "next/link";
+import Image from "next/image";
+
+import { Header } from "@/Components/Header/Header";
+
 import { auth } from "@/Config/firebase";
+import { Item } from "@/Components/Item/Item";
+import BoxImage from "@/assets/images/box.png";
 import { useAuth } from "@/Contexts/AuthContext";
+import HeroImage from "@/assets/images/hero.png";
+import CheckImage from "@/assets/images/check.png";
+import HistoryImage from "@/assets/images/history.png";
+import AllToOneImage from "@/assets/images/allToOne.png";
 
 const options = [
   {
@@ -93,6 +94,7 @@ export const HomePage = () => {
             src={HeroImage}
             alt="hero"
             className="w-60 h-60 animate-pulse mt-14"
+            loading="lazy"
           />
         </div>
 

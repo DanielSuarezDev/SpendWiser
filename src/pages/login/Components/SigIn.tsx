@@ -1,46 +1,21 @@
 import {
-  signInWithPopup,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import {
   FaEye,
-  FaLock,
   FaGoogle,
   FaEyeSlash,
-  FaEnvelope,
 } from "react-icons/fa";
 import React, { useState } from "react";
 
-import { auth } from "../../../Config/firebase";
 import Image from "next/image";
-import LogoLogin from "../../../assets/images/login-image.png";
-import LogoHero from "../../../assets/images/hero.png";
+import useSignIn from "@/Hook/useSignIn";
+
+import LogoLogin from "@/assets/images/login-image.png";
+import LogoHero from "@/assets/images/hero.png";
 
 const SignIn: React.FC<any> = ({handleToggleForm}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const handleSignInWithEmailAndPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.error("Error signing in", error);
-    }
-  };
-
-  const handleSignInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Error signing in with Google", error);
-    }
-  };
+  const { handleSignInWithEmailAndPassword, handleSignInWithGoogle } = useSignIn({email, password});
 
   const toggleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);

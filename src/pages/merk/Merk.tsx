@@ -10,7 +10,7 @@ import { CardTotal } from "@/Components/CardTotal/CardTotal";
 
 import MyDataPage from "./Components/MyDataPage";
 
-export const Mercado: FC<any> = ({
+export const Merk: FC<any> = ({
   total,
   productCount,
   products,
@@ -74,4 +74,4 @@ export const Mercado: FC<any> = ({
   );
 };
 
-export default Mercado;
+export default Merk;

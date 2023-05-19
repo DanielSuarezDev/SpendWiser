@@ -1,47 +1,17 @@
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { collection, doc, getDoc } from "firebase/firestore";
-import { db } from "../../../Config/firebase";
+import React from 'react';
+import Link from "next/link";
+import { BsArrowLeft } from "react-icons/bs";
+
 import { ShopCartIcon } from "@/assets/icons";
 import { formatCurrency } from "@/utils/formatNumber";
-import { BsArrowLeft } from "react-icons/bs";
-import Link from "next/link";
-
-interface ICompra {
-  id: string;
-  fecha: string;
-  total: number;
-  name?: string;
-  items: { id: string; value: string; producto: string; tienda?: string }[];
-}
+import { usePurchaseHistoryDetail } from '@/Hook/usePurchaseHistoryDetail';
 
 interface HistoryDetailsProps {
   id: string;
 }
 
 const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
-  const [historial, setHistorial] = useState<ICompra | null>(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    const fetchHistorial = async () => {
-      try {
-        const docRef = doc(db, "history", id);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-          setHistorial(docSnap.data() as ICompra);
-        } else {
-          console.error(`Historial con id ${id} no encontrado`);
-          router.push("/history");
-        }
-      } catch (error) {
-        console.error("Error obteniendo historial", error);
-      }
-    };
-
-    fetchHistorial();
-  }, [id, router]);
+  const historial = usePurchaseHistoryDetail(id);
 
   if (!historial) {
     return <p>Cargando...</p>;
@@ -51,9 +21,11 @@ const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <Link href="/history" className="flex justify-center items-center mb-5">
-        <BsArrowLeft />
-        <p className="text-2xl font-bold ml-2">{`Historial ${historial?.name}`}</p>
+      <Link href="/history">
+        <div className="flex justify-center items-center mb-5">
+          <BsArrowLeft />
+          <p className="text-2xl font-bold ml-2">{`Historial ${historial?.name}`}</p>
+        </div>
       </Link>
 
       <div className="flex justify-between items-center mb-5">
@@ -64,7 +36,7 @@ const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
       </div>
 
       <ul className="space-y-2">
-        {historial.items.map((item) => {
+        {historial.items.map((item: any) => {
           const value = formatCurrency(item.value);
 
           return (
@@ -81,7 +53,7 @@ const HistoryDetails: React.FC<HistoryDetailsProps> = ({ id }) => {
                 </div>
               </div>
             </div>
-          );
+            );
         })}
       </ul>
     </div>

@@ -12,7 +12,7 @@ export const Item: FC<Props> = ({ title, description, image, isReverse }) => {
   return (
     <div className={`flex flex-col sm:flex-${isReverse ? 'row-reverse' : 'row'} justify-center items-center mt-14`}>
       <div className="sm:w-2/5">
-        <Image src={image} alt="hero" className="w-32 h-32" />
+        <Image src={image} alt="hero" className="w-32 h-32" loading="lazy" />
       </div>
       <div className="text-center sm:w-2/5">
         <h3 className="text-lg text-gray-600 font-bold">{title}</h3>

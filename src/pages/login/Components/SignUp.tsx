@@ -1,50 +1,18 @@
-// components/SignUp.tsx
-import React, { useState } from "react";
-
-import { auth } from "../../../Config/firebase";
-
-import {
-  GoogleAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  updateProfile,
-} from "firebase/auth";
-import { FaGoogle } from "react-icons/fa";
 import Image from "next/image";
-import LogoLogin from "../../../assets/images/login-image.png";
+import React, { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
+
+import useSignIn from "@/Hook/useSignIn";
+
 import LogoHero from "../../../assets/images/hero.png";
+import LogoLogin from "../../../assets/images/login-image.png";
 
 const SignUp: React.FC<any> = ({ handleToggleForm }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const { user } = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (user) {
-        await updateProfile(user, { displayName: name });
-      }
-    } catch (error) {
-      console.error("Error signing up", error);
-    }
-  };
-
-  const handleSignInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error("Error signing in with Google", error);
-    }
-  };
+  const { handleSignUp, handleSignInWithGoogle } = useSignIn({email, password, name});
 
   return (
     <div className="flex">
