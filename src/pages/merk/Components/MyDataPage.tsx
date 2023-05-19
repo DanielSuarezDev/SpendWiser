@@ -39,7 +39,7 @@ export const MyDataPage: React.FC<any> = ({ products = [], setProducts }) => {
 
   return (
     <div className="container mx-auto p-4 mb-96">
-      <h2 className="text-2xl font-bold mb-4">Lista</h2>
+      <h2 className="text-1xl font-bold my-4 text-green-800">Lista</h2>
       {isClient && products?.length === 0 ? (
         <p className="text-lg">No se encontraron datos</p>
       ) : (

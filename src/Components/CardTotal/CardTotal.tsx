@@ -38,7 +38,7 @@ export const CardTotal: FC<any> = ({
               src={BoxRegister}
               alt="Box-register"
               width={45}
-              height={35}
+              height={45}
               className="mr-2"
             />
             <div>

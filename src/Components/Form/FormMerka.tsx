@@ -88,7 +88,7 @@ const FormProducts: React.FC<any> = () => {
 
       <button
         type="submit"
-        className="bg-blue-900 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 w-full"
+        className="bg-green-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 w-full"
       >
         Guardar
       </button>

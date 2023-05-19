@@ -42,22 +42,23 @@ const options = [
   },
 ];
 
-
-
-
 export const HomePage = () => {
   const { user } = useAuth();
 
-const handleSingUot = async () => {
-  try {
-    await auth.signOut();
-  } catch (error) {
-    console.error("Error signing out", error);
-  }
-};
+  const handleSingUot = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.error("Error signing out", error);
+    }
+  };
   return (
     <div>
-      <Header handleSingUot={handleSingUot} photo={user?.photoURL} user={user} />
+      <Header
+        handleSingUot={handleSingUot}
+        photo={user?.photoURL}
+        user={user}
+      />
       <div className="p-4 flex flex-col justify-center items-center">
         <div className="flex flex-col sm:flex-row justify-center items-center mt-14">
           <div className="text-center sm:w-2/5">
@@ -73,9 +74,20 @@ const handleSingUot = async () => {
               SpendWiser, nunca más te quedarás preguntándote cuánto gastaste,
               si los precios han subido o si te cobraron lo correcto.
             </p>
-            {user && <Link href="/merk" className="bg-black p-2 text-green-100 rounded-lg">
-              Registrar compras
-            </Link>}
+            {user && (
+              <div className="relative">
+                <Link
+                  href="/merk"
+                  className="bg-black p-2 text-green-100 rounded-lg relative"
+                >
+                <span className="absolute right-0 flex h-3 w-3">
+                  <span className="animate-ping absolute -right-1 -top-2 inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="inline-flex absolute -right-1 -top-2 rounded-full h-3 w-3 bg-green-400"></span>
+                </span>
+                  Entrar a la app
+                </Link>
+              </div>
+            )}
           </div>
           <Image
             src={HeroImage}
@@ -107,12 +119,12 @@ const handleSingUot = async () => {
         </div>
 
         <div className="mt-14 flex flex-col justify-center items-center">
-          <Link
+          {!user && <Link
             href="/login"
             className="bg-green-300 p-2 text-green-900 rounded-lg"
           >
             Registrate totalmente gratis
-          </Link>
+          </Link>}
           <p className="mt-6 text-center text-sm text-gray-600">
             ¡SpendWiser es tu compañero confiable para hacer compras
             inteligentes y transparentes! registrate y dile adiós a las dudas en
@@ -122,7 +134,13 @@ const handleSingUot = async () => {
 
         <div className="mt-14">
           <p className="text-xs text-gray-400">
-            Desarrollado por <Link href="https://www.instagram.com/danielsuarezdev/?hl=es-la" className="text-green-800">Daniel Suarez Dev</Link>
+            Desarrollado por{" "}
+            <Link
+              href="https://www.instagram.com/danielsuarezdev/?hl=es-la"
+              className="text-green-800"
+            >
+              Daniel Suarez Dev
+            </Link>
           </p>
         </div>
       </div>

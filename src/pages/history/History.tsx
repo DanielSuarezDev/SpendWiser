@@ -71,7 +71,7 @@ const History: React.FC = () => {
 console.log(groupedCompras)
   return (
     <div className="flex flex-col p-2 h-full">
-      <Link href="/" passHref className="flex justify-center items-center">
+      <Link href="/merk" passHref className="flex justify-center items-center">
         <BsArrowLeft />
         <h1 className="text-xl my-4 ml-2">Historial de compras</h1>
       </Link>

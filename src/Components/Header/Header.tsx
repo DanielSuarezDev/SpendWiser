@@ -10,7 +10,7 @@ import Link from "next/link";
 export const Header: FC<any> = ({ handleSingUot, photo, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="flex justify-between items-center p-2 max-w-4xl m-auto">
+    <div className="flex justify-between items-center p-2 max-w-4xl m-auto bg-white">
       <div className="flex">
         <Image src={LogoHorizontal} alt="Logo" width={109} height={24} />
         {user && (
