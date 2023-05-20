@@ -12,6 +12,7 @@ import HeroImage from "@/assets/images/hero.png";
 import CheckImage from "@/assets/images/check.png";
 import HistoryImage from "@/assets/images/history.png";
 import AllToOneImage from "@/assets/images/allToOne.png";
+import Head from "next/head";
 
 const options = [
   {
@@ -55,6 +56,13 @@ export const HomePage = () => {
   };
   return (
     <div>
+      <Head>
+        <title>Gasta más Inteligentemente con SpendWiser</title> 
+        <meta
+          name="description"
+          content="¡SpendWiser es tu compañero confiable para hacer compras inteligentes y transparentes! Regístrate y dile adiós a las dudas en tus compras. 🛍️"
+        />
+      </Head>
       <Header
         handleSingUot={handleSingUot}
         photo={user?.photoURL}
@@ -81,10 +89,10 @@ export const HomePage = () => {
                   href="/merk"
                   className="bg-black p-2 text-green-100 rounded-lg relative"
                 >
-                <span className="absolute right-0 flex h-3 w-3">
-                  <span className="animate-ping absolute -right-1 -top-2 inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="inline-flex absolute -right-1 -top-2 rounded-full h-3 w-3 bg-green-400"></span>
-                </span>
+                  <span className="absolute right-0 flex h-3 w-3">
+                    <span className="animate-ping absolute -right-1 -top-2 inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="inline-flex absolute -right-1 -top-2 rounded-full h-3 w-3 bg-green-400"></span>
+                  </span>
                   Entrar a la app
                 </Link>
               </div>
@@ -121,12 +129,14 @@ export const HomePage = () => {
         </div>
 
         <div className="mt-14 flex flex-col justify-center items-center">
-          {!user && <Link
-            href="/login"
-            className="bg-green-300 p-2 text-green-900 rounded-lg"
-          >
-            Registrate totalmente gratis
-          </Link>}
+          {!user && (
+            <Link
+              href="/login"
+              className="bg-green-300 p-2 text-green-900 rounded-lg"
+            >
+              Registrate totalmente gratis
+            </Link>
+          )}
           <p className="mt-6 text-center text-sm text-gray-600">
             ¡SpendWiser es tu compañero confiable para hacer compras
             inteligentes y transparentes! registrate y dile adiós a las dudas en
