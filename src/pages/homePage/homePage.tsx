@@ -73,7 +73,7 @@ export const HomePage = () => {
           <div className="text-center sm:w-2/5">
             <h3 className="text-2xl text-gray-600 font-bold">Gasta más</h3>
             <h3 className="text-white">
-              <span className="bg-green-400 text-2xl p-1 font-bold">
+              <span className="bg-green-600 text-2xl p-1 font-bold">
                 Inteligentemente
               </span>
             </h3>
@@ -109,7 +109,7 @@ export const HomePage = () => {
         <div className="text-center mt-14 mb-4">
           <h3 className="text-2xl text-gray-600 font-bold">Nuestra app</h3>
           <h3 className="text-white">
-            <span className="bg-green-400 text-2xl p-1 font-bold">
+            <span className="bg-green-700 text-2xl p-1 font-bold">
               Revolucionaria
             </span>
           </h3>
@@ -145,7 +145,7 @@ export const HomePage = () => {
         </div>
 
         <div className="mt-14">
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-700">
             Desarrollado por{" "}
             <Link
               href="https://www.instagram.com/danielsuarezdev/?hl=es-la"
