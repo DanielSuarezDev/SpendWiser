@@ -42,12 +42,16 @@ export const Header: FC<any> = ({ handleSingUot, photo, user }) => {
           )}
         </div>
       ) : (
-        <Link
-          href="/login"
-          className="bg-black text-white px-2 py-1 rounded-lg"
-        >
-          Iniciar sesion
-        </Link>
+        <div>
+          <Link
+            href="/login"
+            className="bg-black text-white px-2 py-1 rounded-lg"
+          >
+            Iniciar sesion
+          </Link>
+
+          <Link href="/login" className="text-xs ml-2 text-green-800 underline">Registrarse</Link>
+        </div>
       )}
     </div>
   );
