@@ -1,5 +1,9 @@
 # SpendWiser
 
+https://github.com/DanielSuarezDev/SpendWiser/assets/65202664/3eec284b-0ead-4bbb-a10f-f1aed2009848
+
+
+
 Welcome to the SpendWiser repository! SpendWiser is a personal finance management application that helps users track and manage their expenses efficiently. This repository is open for collaboration, and we encourage developers to contribute to the codebase.
 
 ## Getting Started
