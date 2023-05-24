@@ -1,0 +1,1 @@
+export {StatsLoad as default} from './stats.load'

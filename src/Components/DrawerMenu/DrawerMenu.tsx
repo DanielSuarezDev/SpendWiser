@@ -2,7 +2,7 @@ import { FC } from "react";
 import Link from "next/link";
 import { BsShop } from "react-icons/bs";
 import { CiLogout } from "react-icons/ci";
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose, IoMdStats } from "react-icons/io";
 import { AiOutlineHome, AiOutlineShoppingCart } from "react-icons/ai";
 
 const DrawerMenu: FC<any> = ({ isOpen, setIsOpen, handleSingUot }) => {
@@ -25,6 +25,10 @@ const DrawerMenu: FC<any> = ({ isOpen, setIsOpen, handleSingUot }) => {
           <Link href="/history" className="flex">
             <AiOutlineShoppingCart className="text-2xl mr-2" />
             Historial
+          </Link>
+          <Link href="/stats" className="flex mt-6">
+            <IoMdStats className="text-2xl mr-2" />
+            Estadísticas
           </Link>
           <div
             className="flex justify-center items-center mt-6"
